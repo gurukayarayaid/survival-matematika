@@ -1,0 +1,3001 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="description" content="Game Survival Matematika Kelas 3 SD Semester 1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>🧮 Math Survival - Kelas 3 SD</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" type="text/css">
+    <style>
+        :root {
+            --primary: #6c5ce7;
+            --primary-dark: #5a4bd1;
+            --secondary: #00cec9;
+            --accent: #fd79a8;
+            --success: #00b894;
+            --danger: #e17055;
+            --warning: #fdcb6e;
+            --dark: #1a1a2e;
+            --darker: #16213e;
+            --card: #0f3460;
+            --text: #ffffff;
+            --text-muted: #b2bec3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 50%, #0a1628 100%);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-animation span {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(108, 92, 231, 0.1);
+            animation: float 25s linear infinite;
+            border-radius: 50%;
+        }
+
+        .bg-animation span:nth-child(1) { left: 10%; width: 40px; height: 40px; animation-delay: 0s; }
+        .bg-animation span:nth-child(2) { left: 20%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+        .bg-animation span:nth-child(3) { left: 35%; width: 30px; height: 30px; animation-delay: 4s; }
+        .bg-animation span:nth-child(4) { left: 50%; width: 50px; height: 50px; animation-delay: 0s; animation-duration: 18s; }
+        .bg-animation span:nth-child(5) { left: 65%; width: 25px; height: 25px; animation-delay: 0s; }
+        .bg-animation span:nth-child(6) { left: 75%; width: 60px; height: 60px; animation-delay: 3s; }
+        .bg-animation span:nth-child(7) { left: 85%; width: 35px; height: 35px; animation-delay: 7s; }
+        .bg-animation span:nth-child(8) { left: 45%; width: 45px; height: 45px; animation-delay: 15s; animation-duration: 45s; }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 15px;
+            min-height: 100vh;
+        }
+
+        /* Screen Management */
+        .screen {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px var(--primary); }
+            50% { box-shadow: 0 0 20px var(--primary), 0 0 40px var(--primary); }
+        }
+
+        /* Header */
+        .game-header {
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .game-header h1 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2em;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+
+        .game-header .subtitle {
+            color: var(--text-muted);
+            font-size: 0.9em;
+        }
+
+        /* Logo Animation */
+        .logo-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .logo-emoji {
+            font-size: 5em;
+            display: inline-block;
+            animation: bounceIn 1s ease;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(15, 52, 96, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.2);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 1em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            width: 100%;
+            margin-bottom: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            transition: width 0.6s, height 0.6s, top 0.6s, left 0.6s;
+        }
+
+        .btn:active::after {
+            width: 300px;
+            height: 300px;
+            top: calc(50% - 150px);
+            left: calc(50% - 150px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 6px 20px rgba(108, 92, 231, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #00a381);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 184, 148, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger), #d63031);
+            color: white;
+            box-shadow: 0 4px 15px rgba(225, 112, 85, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--secondary), #00b5b0);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 206, 201, 0.4);
+        }
+
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), #e84393);
+            color: white;
+            box-shadow: 0 4px 15px rgba(253, 121, 168, 0.4);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #f0b429);
+            color: var(--dark);
+            box-shadow: 0 4px 15px rgba(253, 203, 110, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 0.85em;
+            width: auto;
+            margin-bottom: 0;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Input */
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 700;
+            color: var(--text-muted);
+            font-size: 0.9em;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid rgba(108, 92, 231, 0.3);
+            border-radius: 12px;
+            background: rgba(26, 26, 46, 0.8);
+            color: var(--text);
+            font-size: 1em;
+            font-family: 'Nunito', sans-serif;
+            transition: border-color 0.3s;
+        }
+
+        .input-group input:focus, .input-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(178, 190, 195, 0.5);
+        }
+
+        /* Login Screen */
+        .welcome-box {
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        .welcome-box h2 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5em;
+            margin-bottom: 8px;
+            color: var(--secondary);
+        }
+
+        .welcome-box p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .avatar-select {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .avatar-option {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            border: 3px solid rgba(108, 92, 231, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(15, 52, 96, 0.5);
+        }
+
+        .avatar-option:hover, .avatar-option.selected {
+            border-color: var(--primary);
+            transform: scale(1.15);
+            box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
+        }
+
+        /* Menu Screen */
+        .player-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px;
+            background: rgba(15, 52, 96, 0.6);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .player-avatar {
+            font-size: 2.5em;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(108, 92, 231, 0.2);
+            border-radius: 50%;
+        }
+
+        .player-details h3 {
+            font-size: 1.1em;
+            margin-bottom: 2px;
+        }
+
+        .player-details .player-stats {
+            font-size: 0.8em;
+            color: var(--text-muted);
+        }
+
+        .player-details .player-stats span {
+            color: var(--warning);
+            font-weight: 700;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .menu-item {
+            background: rgba(15, 52, 96, 0.6);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            border-radius: 16px;
+            padding: 20px 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 25px rgba(108, 92, 231, 0.2);
+        }
+
+        .menu-item .icon {
+            font-size: 2.5em;
+            margin-bottom: 8px;
+        }
+
+        .menu-item .label {
+            font-weight: 700;
+            font-size: 0.85em;
+        }
+
+        .menu-item .desc {
+            font-size: 0.7em;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .menu-item.locked {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .menu-item.locked::after {
+            content: '🔒';
+            position: absolute;
+            font-size: 1.5em;
+        }
+
+        /* Game Screen */
+        .game-hud {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .hud-item {
+            background: rgba(15, 52, 96, 0.8);
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .hud-item .hud-label {
+            font-size: 0.7em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hud-item .hud-value {
+            font-size: 1.4em;
+            font-weight: 800;
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .hud-item .hud-value.health { color: var(--danger); }
+        .hud-item .hud-value.score { color: var(--warning); }
+        .hud-item .hud-value.level { color: var(--secondary); }
+
+        /* Health Bar */
+        .health-bar-container {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            height: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(225, 112, 85, 0.3);
+        }
+
+        .health-bar {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease, background 0.5s ease;
+            background: linear-gradient(90deg, var(--danger), var(--accent));
+        }
+
+        .health-bar.high { background: linear-gradient(90deg, var(--success), #55efc4); }
+        .health-bar.medium { background: linear-gradient(90deg, var(--warning), #ffeaa7); }
+        .health-bar.low { background: linear-gradient(90deg, var(--danger), var(--accent)); }
+
+        /* Timer Bar */
+        .timer-bar-container {
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            height: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(253, 203, 110, 0.3);
+        }
+
+        .timer-bar {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.1s linear;
+            background: linear-gradient(90deg, var(--warning), var(--secondary));
+        }
+
+        /* Question Card */
+        .question-card {
+            background: rgba(15, 52, 96, 0.8);
+            border: 2px solid rgba(108, 92, 231, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 15px;
+            animation: bounceIn 0.5s ease;
+        }
+
+        .question-category {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75em;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--primary);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+        }
+
+        .question-text {
+            font-family: 'Fredoka One', cursive;
+            font-size: 2.2em;
+            margin-bottom: 5px;
+            line-height: 1.3;
+            color: var(--text);
+        }
+
+        .question-hint {
+            font-size: 0.85em;
+            color: var(--text-muted);
+            margin-top: 8px;
+        }
+
+        /* Answer Options */
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .answer-btn {
+            padding: 16px;
+            border: 2px solid rgba(108, 92, 231, 0.3);
+            border-radius: 14px;
+            background: rgba(15, 52, 96, 0.6);
+            color: var(--text);
+            font-size: 1.3em;
+            font-weight: 800;
+            font-family: 'Fredoka One', cursive;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .answer-btn:hover {
+            border-color: var(--primary);
+            transform: scale(1.03);
+            background: rgba(108, 92, 231, 0.2);
+        }
+
+        .answer-btn.correct {
+            border-color: var(--success);
+            background: rgba(0, 184, 148, 0.3);
+            animation: pulse 0.5s ease;
+        }
+
+        .answer-btn.wrong {
+            border-color: var(--danger);
+            background: rgba(225, 112, 85, 0.3);
+            animation: shake 0.5s ease;
+        }
+
+        .answer-btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* Input Answer */
+        .answer-input-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .answer-input-container input {
+            flex: 1;
+            padding: 14px;
+            border: 2px solid rgba(108, 92, 231, 0.3);
+            border-radius: 12px;
+            background: rgba(26, 26, 46, 0.8);
+            color: var(--text);
+            font-size: 1.3em;
+            font-weight: 800;
+            text-align: center;
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .answer-input-container input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        /* Combo & Streak */
+        .combo-display {
+            text-align: center;
+            margin-bottom: 10px;
+            min-height: 30px;
+        }
+
+        .combo-text {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.1em;
+            color: var(--warning);
+            animation: pulse 0.5s ease;
+        }
+
+        /* Power-ups */
+        .powerups {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+            justify-content: center;
+        }
+
+        .powerup-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            border: 2px solid rgba(108, 92, 231, 0.3);
+            background: rgba(15, 52, 96, 0.6);
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .powerup-btn:hover:not(:disabled) {
+            transform: scale(1.1);
+            border-color: var(--primary);
+        }
+
+        .powerup-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .powerup-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--accent);
+            color: white;
+            font-size: 0.5em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+        }
+
+        /* Level Selection */
+        .level-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+        }
+
+        .level-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px;
+            background: rgba(15, 52, 96, 0.6);
+            border: 1px solid rgba(108, 92, 231, 0.2);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .level-card:hover {
+            transform: translateX(5px);
+            border-color: var(--primary);
+            background: rgba(108, 92, 231, 0.1);
+        }
+
+        .level-card.locked {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .level-card.locked:hover {
+            transform: none;
+            border-color: rgba(108, 92, 231, 0.2);
+            background: rgba(15, 52, 96, 0.6);
+        }
+
+        .level-icon {
+            font-size: 2.2em;
+            width: 50px;
+            text-align: center;
+        }
+
+        .level-info h4 {
+            font-size: 1em;
+            margin-bottom: 3px;
+        }
+
+        .level-info p {
+            font-size: 0.75em;
+            color: var(--text-muted);
+        }
+
+        .level-stars {
+            margin-left: auto;
+            font-size: 0.9em;
+            color: var(--warning);
+        }
+
+        /* Game Over */
+        .game-over-screen {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .game-over-screen .result-emoji {
+            font-size: 5em;
+            animation: bounceIn 0.8s ease;
+        }
+
+        .game-over-screen h2 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8em;
+            margin: 15px 0 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            background: rgba(15, 52, 96, 0.6);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        .stat-item .stat-value {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8em;
+            color: var(--secondary);
+        }
+
+        .stat-item .stat-label {
+            font-size: 0.75em;
+            color: var(--text-muted);
+            margin-top: 3px;
+        }
+
+        /* Admin Screen */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .admin-header h2 {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.3em;
+            color: var(--secondary);
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid rgba(108, 92, 231, 0.3);
+            border-radius: 12px;
+            background: rgba(26, 26, 46, 0.8);
+            color: var(--text);
+            font-size: 0.95em;
+            margin-bottom: 15px;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .score-table th {
+            background: rgba(108, 92, 231, 0.3);
+            padding: 10px 8px;
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: left;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .score-table td {
+            padding: 10px 8px;
+            font-size: 0.85em;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.1);
+        }
+
+        .score-table tr:hover td {
+            background: rgba(108, 92, 231, 0.05);
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 0.8em;
+        }
+
+        .rank-1 { background: linear-gradient(135deg, #f9ca24, #f0932b); color: #2d3436; }
+        .rank-2 { background: linear-gradient(135deg, #dfe6e9, #b2bec3); color: #2d3436; }
+        .rank-3 { background: linear-gradient(135deg, #e17055, #d63031); color: white; }
+        .rank-other { background: rgba(108, 92, 231, 0.2); color: var(--text-muted); }
+
+        /* Settings */
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(108, 92, 231, 0.1);
+        }
+
+        .setting-item .setting-label {
+            font-weight: 700;
+            font-size: 0.95em;
+        }
+
+        .setting-item .setting-desc {
+            font-size: 0.75em;
+            color: var(--text-muted);
+        }
+
+        /* Toggle Switch */
+        .toggle {
+            width: 50px;
+            height: 26px;
+            background: rgba(108, 92, 231, 0.2);
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s;
+            border: none;
+        }
+
+        .toggle.active {
+            background: var(--primary);
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s;
+        }
+
+        .toggle.active::after {
+            transform: translateX(24px);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9em;
+            z-index: 1000;
+            transition: transform 0.4s ease;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .toast.success { background: var(--success); color: white; }
+        .toast.error { background: var(--danger); color: white; }
+        .toast.info { background: var(--primary); color: white; }
+        .toast.warning { background: var(--warning); color: var(--dark); }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--darker);
+            border: 1px solid rgba(108, 92, 231, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            width: 100%;
+            max-width: 400px;
+            max-height: 80vh;
+            overflow-y: auto;
+            animation: bounceIn 0.4s ease;
+        }
+
+        .modal h3 {
+            font-family: 'Fredoka One', cursive;
+            margin-bottom: 15px;
+            color: var(--secondary);
+        }
+
+        /* Back Button */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(108, 92, 231, 0.2);
+            color: var(--text);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .back-btn:hover {
+            background: rgba(108, 92, 231, 0.4);
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            .print-area {
+                display: block !important;
+            }
+
+            .print-area * {
+                color: black !important;
+                background: white !important;
+                border-color: #ddd !important;
+            }
+
+            .print-area h1, .print-area h2, .print-area h3 {
+                color: #333 !important;
+            }
+
+            .print-area table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+
+            .print-area th, .print-area td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: left;
+            }
+
+            .print-area th {
+                background: #f0f0f0 !important;
+            }
+        }
+
+        .print-area {
+            display: none;
+        }
+
+        /* Achievement Badge */
+        .achievement-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: var(--darker);
+            border: 2px solid var(--warning);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            z-index: 200;
+            transition: transform 0.5s ease;
+        }
+
+        .achievement-popup.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .achievement-popup .achievement-icon {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+
+        .achievement-popup h3 {
+            font-family: 'Fredoka One', cursive;
+            color: var(--warning);
+            margin-bottom: 5px;
+        }
+
+        .achievement-popup p {
+            color: var(--text-muted);
+            font-size: 0.9em;
+        }
+
+        /* Responsive */
+        @media (max-width: 380px) {
+            .question-text { font-size: 1.8em; }
+            .answers-grid { gap: 8px; }
+            .answer-btn { padding: 12px; font-size: 1.1em; }
+            .game-header h1 { font-size: 1.6em; }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(108, 92, 231, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 0.8s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-screen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 60vh;
+            gap: 15px;
+        }
+
+        .loading-screen p {
+            color: var(--text-muted);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(108, 92, 231, 0.3); border-radius: 3px; }
+
+        /* Admin Login */
+        .admin-login-note {
+            background: rgba(253, 121, 168, 0.1);
+            border: 1px solid rgba(253, 121, 168, 0.3);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 0.8em;
+            color: var(--accent);
+            text-align: center;
+        }
+
+        /* Progress indicator */
+        .progress-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 15px;
+        }
+
+        .progress-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(108, 92, 231, 0.2);
+            transition: all 0.3s;
+        }
+
+        .progress-dot.correct { background: var(--success); }
+        .progress-dot.wrong { background: var(--danger); }
+        .progress-dot.current { background: var(--primary); animation: pulse 1s infinite; }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Achievement Popup -->
+    <div class="achievement-popup" id="achievementPopup">
+        <div class="achievement-icon" id="achievementIcon">🏆</div>
+        <h3 id="achievementTitle">Achievement!</h3>
+        <p id="achievementDesc">Kamu hebat!</p>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modalContent"></div>
+    </div>
+
+    <div class="container">
+        <!-- ====== LOADING SCREEN ====== -->
+        <div class="screen active" id="loadingScreen">
+            <div class="loading-screen">
+                <div class="logo-emoji">🧮</div>
+                <div class="spinner"></div>
+                <p>Memuat Math Survival...</p>
+            </div>
+        </div>
+
+        <!-- ====== LOGIN SCREEN ====== -->
+        <div class="screen" id="loginScreen">
+            <div class="game-header">
+                <h1>🧮 Math Survival</h1>
+                <p class="subtitle">Matematika Kelas 3 SD - Semester 1</p>
+            </div>
+            <div class="card">
+                <div class="welcome-box">
+                    <h2>Selamat Datang! 🎮</h2>
+                    <p>Masukkan namamu dan pilih avatar untuk memulai petualangan matematika!</p>
+
+                    <div class="avatar-select" id="avatarSelect">
+                        <div class="avatar-option" data-avatar="🦁" onclick="selectAvatar(this)">🦁</div>
+                        <div class="avatar-option" data-avatar="🐱" onclick="selectAvatar(this)">🐱</div>
+                        <div class="avatar-option" data-avatar="🦊" onclick="selectAvatar(this)">🦊</div>
+                        <div class="avatar-option" data-avatar="🐼" onclick="selectAvatar(this)">🐼</div>
+                        <div class="avatar-option" data-avatar="🦄" onclick="selectAvatar(this)">🦄</div>
+                        <div class="avatar-option" data-avatar="🐸" onclick="selectAvatar(this)">🐸</div>
+                        <div class="avatar-option" data-avatar="🦋" onclick="selectAvatar(this)">🦋</div>
+                        <div class="avatar-option" data-avatar="🐧" onclick="selectAvatar(this)">🐧</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label>📝 Nama Pemain</label>
+                        <input type="text" id="playerNameInput" placeholder="Ketik namamu di sini..." maxlength="20" autocomplete="off">
+                    </div>
+
+                    <button class="btn btn-primary" onclick="loginPlayer()">
+                        🚀 Mulai Bermain!
+                    </button>
+
+                    <div style="margin-top: 15px;">
+                        <button class="btn btn-outline btn-sm" onclick="showAdminLogin()" style="width:auto;">
+                            🔐 Admin
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== MENU SCREEN ====== -->
+        <div class="screen" id="menuScreen">
+            <div class="game-header">
+                <h1>🧮 Math Survival</h1>
+            </div>
+
+            <div class="player-info">
+                <div class="player-avatar" id="menuAvatar">🦁</div>
+                <div class="player-details">
+                    <h3 id="menuPlayerName">Player</h3>
+                    <div class="player-stats">
+                        ⭐ Level <span id="menuPlayerLevel">1</span> &bull;
+                        🏆 Score <span id="menuPlayerScore">0</span> &bull;
+                        🎯 Benar <span id="menuPlayerCorrect">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="menu-grid">
+                <div class="menu-item" onclick="showScreen('levelSelectScreen')">
+                    <div class="icon">⚔️</div>
+                    <div class="label">Main</div>
+                    <div class="desc">Pilih Level</div>
+                </div>
+                <div class="menu-item" onclick="showScreen('progressScreen')">
+                    <div class="icon">📊</div>
+                    <div class="label">Progress</div>
+                    <div class="desc">Lihat Progress</div>
+                </div>
+                <div class="menu-item" onclick="showLeaderboard()">
+                    <div class="icon">🏆</div>
+                    <div class="label">Papan Skor</div>
+                    <div class="desc">Ranking</div>
+                </div>
+                <div class="menu-item" onclick="showScreen('settingsScreen')">
+                    <div class="icon">⚙️</div>
+                    <div class="label">Pengaturan</div>
+                    <div class="desc">Setting Game</div>
+                </div>
+            </div>
+
+            <button class="btn btn-danger btn-sm" onclick="logoutPlayer()" style="width:100%;">
+                🚪 Keluar
+            </button>
+        </div>
+
+        <!-- ====== LEVEL SELECT SCREEN ====== -->
+        <div class="screen" id="levelSelectScreen">
+            <button class="back-btn" onclick="showScreen('menuScreen')">← Kembali</button>
+            <div class="game-header">
+                <h1>⚔️ Pilih Level</h1>
+                <p class="subtitle">Semakin tinggi level, semakin sulit!</p>
+            </div>
+
+            <div class="level-grid" id="levelGrid">
+                <!-- Levels will be generated by JS -->
+            </div>
+        </div>
+
+        <!-- ====== GAME SCREEN ====== -->
+        <div class="screen" id="gameScreen">
+            <div class="game-hud">
+                <div class="hud-item">
+                    <div class="hud-label">❤️ Nyawa</div>
+                    <div class="hud-value health" id="hudHealth">3</div>
+                </div>
+                <div class="hud-item">
+                    <div class="hud-label">⭐ Score</div>
+                    <div class="hud-value score" id="hudScore">0</div>
+                </div>
+                <div class="hud-item">
+                    <div class="hud-label">📊 Soal</div>
+                    <div class="hud-value level" id="hudQuestion">1/10</div>
+                </div>
+            </div>
+
+            <div class="health-bar-container">
+                <div class="health-bar high" id="healthBar" style="width: 100%"></div>
+            </div>
+
+            <div class="timer-bar-container">
+                <div class="timer-bar" id="timerBar" style="width: 100%"></div>
+            </div>
+
+            <div class="progress-dots" id="progressDots"></div>
+
+            <div class="combo-display" id="comboDisplay"></div>
+
+            <div class="question-card" id="questionCard">
+                <div class="question-category" id="questionCategory">Penjumlahan</div>
+                <div class="question-text" id="questionText">12 + 8 = ?</div>
+                <div class="question-hint" id="questionHint"></div>
+            </div>
+
+            <div class="answers-grid" id="answersGrid">
+                <!-- Answer buttons generated by JS -->
+            </div>
+
+            <div class="powerups" id="powerupsContainer">
+                <button class="powerup-btn" id="powerup5050" onclick="usePowerup('5050')" title="Hapus 2 jawaban salah">
+                    ✂️
+                    <span class="powerup-badge" id="badge5050">3</span>
+                </button>
+                <button class="powerup-btn" id="powerupSkip" onclick="usePowerup('skip')" title="Lewati soal">
+                    ⏭️
+                    <span class="powerup-badge" id="badgeSkip">2</span>
+                </button>
+                <button class="powerup-btn" id="powerupTime" onclick="usePowerup('time')" title="Tambah waktu">
+                    ⏰
+                    <span class="powerup-badge" id="badgeTime">2</span>
+                </button>
+                <button class="powerup-btn" id="powerupHeal" onclick="usePowerup('heal')" title="Tambah nyawa">
+                    💖
+                    <span class="powerup-badge" id="badgeHeal">1</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ====== GAME OVER SCREEN ====== -->
+        <div class="screen" id="gameOverScreen">
+            <div class="game-over-screen">
+                <div class="result-emoji" id="resultEmoji">🎉</div>
+                <h2 id="resultTitle">Hebat!</h2>
+                <p id="resultMessage" style="color: var(--text-muted);">Kamu menyelesaikan level ini!</p>
+
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value" id="statScore">0</div>
+                        <div class="stat-label">Total Score</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statCorrect">0/10</div>
+                        <div class="stat-label">Jawaban Benar</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statCombo">0</div>
+                        <div class="stat-label">Kombo Terbaik</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="statTime">0s</div>
+                        <div class="stat-label">Waktu Rata-rata</div>
+                    </div>
+                </div>
+
+                <div id="starsDisplay" style="font-size: 2em; margin-bottom: 20px;">⭐⭐⭐</div>
+
+                <button class="btn btn-primary" onclick="retryLevel()">🔄 Coba Lagi</button>
+                <button class="btn btn-secondary" onclick="showScreen('levelSelectScreen')">📋 Pilih Level</button>
+                <button class="btn btn-outline" onclick="showScreen('menuScreen')" style="width:100%; margin-top:5px;">🏠 Menu Utama</button>
+            </div>
+        </div>
+
+        <!-- ====== PROGRESS SCREEN ====== -->
+        <div class="screen" id="progressScreen">
+            <button class="back-btn" onclick="showScreen('menuScreen')">← Kembali</button>
+            <div class="game-header">
+                <h1>📊 Progress</h1>
+                <p class="subtitle">Statistik permainanmu</p>
+            </div>
+
+            <div id="progressContent">
+                <!-- Generated by JS -->
+            </div>
+
+            <button class="btn btn-warning" onclick="printPlayerScore()" style="margin-top:15px;">
+                🖨️ Cetak Nilaimu
+            </button>
+        </div>
+
+        <!-- ====== LEADERBOARD SCREEN ====== -->
+        <div class="screen" id="leaderboardScreen">
+            <button class="back-btn no-print" onclick="showScreen('menuScreen')">← Kembali</button>
+            <div class="game-header no-print">
+                <h1>🏆 Papan Skor</h1>
+                <p class="subtitle">Ranking semua pemain</p>
+            </div>
+
+            <div id="leaderboardContent">
+                <!-- Generated by JS -->
+            </div>
+
+            <div class="no-print" style="margin-top:15px;">
+                <button class="btn btn-warning" onclick="printAllScores()">
+                    🖨️ Cetak Semua Nilai
+                </button>
+            </div>
+        </div>
+
+        <!-- ====== SETTINGS SCREEN ====== -->
+        <div class="screen" id="settingsScreen">
+            <button class="back-btn" onclick="showScreen('menuScreen')">← Kembali</button>
+            <div class="game-header">
+                <h1>⚙️ Pengaturan</h1>
+            </div>
+
+            <div class="card">
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">🔊 Suara</div>
+                        <div class="setting-desc">Efek suara game</div>
+                    </div>
+                    <button class="toggle active" id="toggleSound" onclick="toggleSetting('sound')"></button>
+                </div>
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">⏱️ Timer</div>
+                        <div class="setting-desc">Batas waktu menjawab</div>
+                    </div>
+                    <button class="toggle active" id="toggleTimer" onclick="toggleSetting('timer')"></button>
+                </div>
+                <div class="setting-item">
+                    <div>
+                        <div class="setting-label">🎵 Musik</div>
+                        <div class="setting-desc">Musik latar belakang</div>
+                    </div>
+                    <button class="toggle" id="toggleMusic" onclick="toggleSetting('music')"></button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="margin-bottom:10px; font-family:'Fredoka One',cursive; color:var(--secondary);">ℹ️ Tentang</h3>
+                <p style="font-size:0.85em; color:var(--text-muted); line-height:1.6;">
+                    <strong>Math Survival</strong> v1.0<br>
+                    Game pembelajaran Matematika untuk Kelas 3 SD Semester 1.<br>
+                    Materi: Penjumlahan, Pengurangan, Perkalian, Pembagian, Pengukuran, dan Pecahan.<br><br>
+                    Dibuat dengan ❤️ untuk siswa Indonesia.
+                </p>
+            </div>
+
+            <button class="btn btn-danger" onclick="resetProgress()" style="margin-top:15px;">
+                🗑️ Reset Semua Progress
+            </button>
+        </div>
+
+        <!-- ====== ADMIN SCREEN ====== -->
+        <div class="screen" id="adminScreen">
+            <button class="back-btn no-print" onclick="showScreen('loginScreen')">← Kembali</button>
+            <div class="admin-header no-print">
+                <h2>🔐 Admin Panel</h2>
+                <button class="btn btn-sm btn-outline" onclick="refreshAdminData()" style="width:auto;">🔄 Refresh</button>
+            </div>
+
+            <div class="admin-login-note no-print">
+                🔒 Area Admin - Data semua pemain ditampilkan di sini
+            </div>
+
+            <input type="text" class="search-box no-print" id="adminSearch" placeholder="🔍 Cari nama pemain..." oninput="filterAdminPlayers()">
+
+            <div id="adminContent">
+                <div style="text-align:center; padding:40px;">
+                    <div class="spinner"></div>
+                    <p style="color:var(--text-muted); margin-top:10px;">Memuat data...</p>
+                </div>
+            </div>
+
+            <div class="no-print" style="margin-top:15px;">
+                <button class="btn btn-warning" onclick="printAllScores()">
+                    🖨️ Cetak Semua Nilai Pemain
+                </button>
+                <button class="btn btn-danger" onclick="clearAllData()" style="margin-top:5px;">
+                    🗑️ Hapus Semua Data
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Area -->
+    <div class="print-area" id="printArea"></div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+    <script>
+    // ========================================
+    // FIREBASE CONFIGURATION
+    // ========================================
+    // GANTI DENGAN KONFIGURASI FIREBASE ANDA
+    const firebaseConfig = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT.firebaseapp.com",
+        databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
+        projectId: "YOUR_PROJECT",
+        storageBucket: "YOUR_PROJECT.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+
+    // Initialize Firebase
+    let db;
+    let firebaseReady = false;
+
+    try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.database();
+        firebaseReady = firebaseConfig.apiKey !== "YOUR_API_KEY";
+    } catch(e) {
+        console.warn('Firebase init failed, using local storage:', e);
+    }
+
+    // ========================================
+    // GAME STATE
+    // ========================================
+    let gameState = {
+        currentPlayer: null,
+        currentLevel: 0,
+        currentQuestion: 0,
+        totalQuestions: 10,
+        health: 3,
+        maxHealth: 3,
+        score: 0,
+        combo: 0,
+        bestCombo: 0,
+        correctAnswers: 0,
+        wrongAnswers: 0,
+        questionResults: [],
+        timerInterval: null,
+        timeLeft: 0,
+        maxTime: 30,
+        questionStartTime: 0,
+        totalTime: 0,
+        powerups: { '5050': 3, 'skip': 2, 'time': 2, 'heal': 1 },
+        settings: { sound: true, timer: true, music: false },
+        currentQuestionData: null,
+        answerLocked: false
+    };
+
+    // ========================================
+    // LEVELS DEFINITION
+    // ========================================
+    const LEVELS = [
+        {
+            id: 1,
+            name: "Penjumlahan Dasar",
+            icon: "➕",
+            desc: "Penjumlahan bilangan sampai 100",
+            category: "penjumlahan",
+            difficulty: 1,
+            timePerQuestion: 30,
+            unlockScore: 0
+        },
+        {
+            id: 2,
+            name: "Pengurangan Dasar",
+            icon: "➖",
+            desc: "Pengurangan bilangan sampai 100",
+            category: "pengurangan",
+            difficulty: 1,
+            timePerQuestion: 30,
+            unlockScore: 50
+        },
+        {
+            id: 3,
+            name: "Penjumlahan Lanjut",
+            icon: "🔢",
+            desc: "Penjumlahan bilangan sampai 500",
+            category: "penjumlahan_lanjut",
+            difficulty: 2,
+            timePerQuestion: 35,
+            unlockScore: 150
+        },
+        {
+            id: 4,
+            name: "Pengurangan Lanjut",
+            icon: "🔻",
+            desc: "Pengurangan bilangan sampai 500",
+            category: "pengurangan_lanjut",
+            difficulty: 2,
+            timePerQuestion: 35,
+            unlockScore: 250
+        },
+        {
+            id: 5,
+            name: "Perkalian Dasar",
+            icon: "✖️",
+            desc: "Perkalian bilangan 1-10",
+            category: "perkalian",
+            difficulty: 2,
+            timePerQuestion: 30,
+            unlockScore: 400
+        },
+        {
+            id: 6,
+            name: "Pembagian Dasar",
+            icon: "➗",
+            desc: "Pembagian bilangan sederhana",
+            category: "pembagian",
+            difficulty: 2,
+            timePerQuestion: 35,
+            unlockScore: 550
+        },
+        {
+            id: 7,
+            name: "Pengukuran",
+            icon: "📏",
+            desc: "Panjang, berat, dan waktu",
+            category: "pengukuran",
+            difficulty: 3,
+            timePerQuestion: 40,
+            unlockScore: 750
+        },
+        {
+            id: 8,
+            name: "Pecahan",
+            icon: "🥧",
+            desc: "Pecahan sederhana",
+            category: "pecahan",
+            difficulty: 3,
+            timePerQuestion: 40,
+            unlockScore: 950
+        },
+        {
+            id: 9,
+            name: "Campuran Mudah",
+            icon: "🎲",
+            desc: "Semua operasi campuran",
+            category: "campuran",
+            difficulty: 3,
+            timePerQuestion: 35,
+            unlockScore: 1200
+        },
+        {
+            id: 10,
+            name: "Survival Mode",
+            icon: "💀",
+            desc: "Tantangan ultimate! Semua materi!",
+            category: "survival",
+            difficulty: 4,
+            timePerQuestion: 25,
+            unlockScore: 1500
+        }
+    ];
+
+    // ========================================
+    // QUESTION GENERATORS
+    // ========================================
+    function generateQuestion(category, difficulty) {
+        let question, answer, options, hintText = '';
+        const cat = category || 'campuran';
+
+        switch(cat) {
+            case 'penjumlahan':
+                ({ question, answer, options } = genAddition(1, 50));
+                hintText = 'Jumlahkan kedua bilangan';
+                break;
+            case 'pengurangan':
+                ({ question, answer, options } = genSubtraction(1, 50));
+                hintText = 'Kurangkan bilangan';
+                break;
+            case 'penjumlahan_lanjut':
+                ({ question, answer, options } = genAddition(50, 250));
+                hintText = 'Jumlahkan dengan teliti';
+                break;
+            case 'pengurangan_lanjut':
+                ({ question, answer, options } = genSubtraction(100, 500));
+                hintText = 'Kurangkan dengan teliti';
+                break;
+            case 'perkalian':
+                ({ question, answer, options } = genMultiplication(1, 10));
+                hintText = 'Kalikan kedua bilangan';
+                break;
+            case 'pembagian':
+                ({ question, answer, options } = genDivision());
+                hintText = 'Bagi bilangan tersebut';
+                break;
+            case 'pengukuran':
+                ({ question, answer, options, hintText } = genMeasurement());
+                break;
+            case 'pecahan':
+                ({ question, answer, options, hintText } = genFraction());
+                break;
+            case 'campuran':
+            case 'survival':
+                const types = ['penjumlahan', 'pengurangan', 'perkalian', 'pembagian', 'pengukuran', 'pecahan'];
+                const randomType = types[Math.floor(Math.random() * types.length)];
+                return generateQuestion(randomType, difficulty);
+            default:
+                ({ question, answer, options } = genAddition(1, 50));
+        }
+
+        return { question, answer, options, hintText, category: cat };
+    }
+
+    function genAddition(min, max) {
+        const a = randInt(min, max);
+        const b = randInt(min, max);
+        const answer = a + b;
+        const question = `${a} + ${b} = ?`;
+        const options = generateOptions(answer);
+        return { question, answer, options };
+    }
+
+    function genSubtraction(min, max) {
+        let a = randInt(min, max);
+        let b = randInt(min, Math.min(a, max));
+        if (b > a) [a, b] = [b, a];
+        const answer = a - b;
+        const question = `${a} - ${b} = ?`;
+        const options = generateOptions(answer);
+        return { question, answer, options };
+    }
+
+    function genMultiplication(min, max) {
+        const a = randInt(min, max);
+        const b = randInt(min, max);
+        const answer = a * b;
+        const question = `${a} × ${b} = ?`;
+        const options = generateOptions(answer);
+        return { question, answer, options };
+    }
+
+    function genDivision() {
+        const b = randInt(2, 10);
+        const answer = randInt(1, 10);
+        const a = b * answer;
+        const question = `${a} ÷ ${b} = ?`;
+        const options = generateOptions(answer);
+        return { question, answer, options };
+    }
+
+    function genMeasurement() {
+        const types = [
+            () => {
+                const m = randInt(1, 5);
+                const cm = randInt(0, 99);
+                const answer = m * 100 + cm;
+                return {
+                    question: `${m} m ${cm} cm = ... cm`,
+                    answer,
+                    options: generateOptions(answer),
+                    hintText: '1 meter = 100 cm'
+                };
+            },
+            () => {
+                const kg = randInt(1, 5);
+                const answer = kg * 1000;
+                return {
+                    question: `${kg} kg = ... gram`,
+                    answer,
+                    options: generateOptions(answer),
+                    hintText: '1 kg = 1000 gram'
+                };
+            },
+            () => {
+                const hours = randInt(1, 5);
+                const mins = randInt(0, 59);
+                const answer = hours * 60 + mins;
+                return {
+                    question: `${hours} jam ${mins} menit = ... menit`,
+                    answer,
+                    options: generateOptions(answer),
+                    hintText: '1 jam = 60 menit'
+                };
+            },
+            () => {
+                const m = randInt(2, 10);
+                const answer = m * 100;
+                return {
+                    question: `${m} m = ... cm`,
+                    answer,
+                    options: generateOptions(answer),
+                    hintText: '1 meter = 100 cm'
+                };
+            },
+            () => {
+                const grams = randInt(1, 5) * 1000;
+                const answer = grams / 1000;
+                return {
+                    question: `${grams} gram = ... kg`,
+                    answer,
+                    options: generateOptions(answer),
+                    hintText: '1000 gram = 1 kg'
+                };
+            }
+        ];
+
+        const gen = types[Math.floor(Math.random() * types.length)];
+        return gen();
+    }
+
+    function genFraction() {
+        const types = [
+            () => {
+                const whole = randInt(2, 8) * 2;
+                const half = whole / 2;
+                return {
+                    question: `½ dari ${whole} = ?`,
+                    answer: half,
+                    options: generateOptions(half),
+                    hintText: '½ berarti dibagi 2'
+                };
+            },
+            () => {
+                const whole = randInt(2, 6) * 3;
+                const third = whole / 3;
+                return {
+                    question: `⅓ dari ${whole} = ?`,
+                    answer: third,
+                    options: generateOptions(third),
+                    hintText: '⅓ berarti dibagi 3'
+                };
+            },
+            () => {
+                const whole = randInt(1, 5) * 4;
+                const quarter = whole / 4;
+                return {
+                    question: `¼ dari ${whole} = ?`,
+                    answer: quarter,
+                    options: generateOptions(quarter),
+                    hintText: '¼ berarti dibagi 4'
+                };
+            },
+            () => {
+                const a = randInt(1, 3);
+                const b = randInt(1, 3);
+                const denom = a + b;
+                return {
+                    question: `Pecahan ${a}/${denom} + ${b}/${denom} = ?/${denom}. Berapa pembilangnya?`,
+                    answer: a + b,
+                    options: generateOptions(a + b),
+                    hintText: 'Jumlahkan pembilangnya saja'
+                };
+            }
+        ];
+
+        const gen = types[Math.floor(Math.random() * types.length)];
+        return gen();
+    }
+
+    function randInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function generateOptions(correctAnswer) {
+        const options = new Set([correctAnswer]);
+        let attempts = 0;
+        while (options.size < 4 && attempts < 100) {
+            let offset = randInt(1, Math.max(5, Math.abs(Math.floor(correctAnswer * 0.3))));
+            if (Math.random() > 0.5) offset = -offset;
+            let wrong = correctAnswer + offset;
+            if (wrong < 0) wrong = correctAnswer + Math.abs(offset);
+            if (wrong !== correctAnswer) options.add(wrong);
+            attempts++;
+        }
+        while (options.size < 4) {
+            options.add(correctAnswer + options.size * 2);
+        }
+        return shuffle([...options]);
+    }
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    // ========================================
+    // SCREEN MANAGEMENT
+    // ========================================
+    function showScreen(screenId) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(screenId).classList.add('active');
+
+        if (screenId === 'levelSelectScreen') renderLevels();
+        if (screenId === 'progressScreen') renderProgress();
+        if (screenId === 'leaderboardScreen') loadLeaderboard();
+        if (screenId === 'adminScreen') loadAdminData();
+        if (screenId === 'menuScreen') updateMenuInfo();
+    }
+
+    // ========================================
+    // PLAYER MANAGEMENT
+    // ========================================
+    let selectedAvatar = '🦁';
+
+    function selectAvatar(el) {
+        document.querySelectorAll('.avatar-option').forEach(a => a.classList.remove('selected'));
+        el.classList.add('selected');
+        selectedAvatar = el.dataset.avatar;
+    }
+
+    async function loginPlayer() {
+        const name = document.getElementById('playerNameInput').value.trim();
+        if (!name) {
+            showToast('Masukkan namamu dulu! 😊', 'warning');
+            return;
+        }
+
+        if (name.length < 2) {
+            showToast('Nama minimal 2 karakter!', 'warning');
+            return;
+        }
+
+        const playerData = await getPlayerData(name);
+
+        if (playerData) {
+            gameState.currentPlayer = { name, ...playerData };
+            showToast(`Selamat datang kembali, ${name}! 🎮`, 'success');
+        } else {
+            gameState.currentPlayer = {
+                name,
+                avatar: selectedAvatar,
+                totalScore: 0,
+                totalCorrect: 0,
+                totalPlayed: 0,
+                highestLevel: 1,
+                levelStars: {},
+                createdAt: new Date().toISOString(),
+                lastPlayed: new Date().toISOString()
+            };
+            await savePlayerData(gameState.currentPlayer);
+            showToast(`Halo ${name}! Selamat bermain! 🎉`, 'success');
+        }
+
+        localStorage.setItem('mathSurvival_currentPlayer', name);
+        showScreen('menuScreen');
+    }
+
+    function logoutPlayer() {
+        stopGameTimer();
+        gameState.currentPlayer = null;
+        localStorage.removeItem('mathSurvival_currentPlayer');
+        document.getElementById('playerNameInput').value = '';
+        showScreen('loginScreen');
+    }
+
+    function updateMenuInfo() {
+        if (!gameState.currentPlayer) return;
+        const p = gameState.currentPlayer;
+        document.getElementById('menuAvatar').textContent = p.avatar || '🦁';
+        document.getElementById('menuPlayerName').textContent = p.name;
+        document.getElementById('menuPlayerLevel').textContent = p.highestLevel || 1;
+        document.getElementById('menuPlayerScore').textContent = p.totalScore || 0;
+        document.getElementById('menuPlayerCorrect').textContent = p.totalCorrect || 0;
+    }
+
+    // ========================================
+    // DATA PERSISTENCE
+    // ========================================
+    async function getPlayerData(name) {
+        const key = sanitizeKey(name);
+        if (firebaseReady) {
+            try {
+                const snapshot = await db.ref('players/' + key).once('value');
+                return snapshot.val();
+            } catch(e) {
+                console.warn('Firebase read failed:', e);
+            }
+        }
+        // Fallback to localStorage
+        const data = localStorage.getItem('mathSurvival_player_' + key);
+        return data ? JSON.parse(data) : null;
+    }
+
+    async function savePlayerData(playerData) {
+        const key = sanitizeKey(playerData.name);
+        playerData.lastPlayed = new Date().toISOString();
+        if (firebaseReady) {
+            try {
+                await db.ref('players/' + key).set(playerData);
+            } catch(e) {
+                console.warn('Firebase write failed:', e);
+            }
+        }
+        localStorage.setItem('mathSurvival_player_' + key, JSON.stringify(playerData));
+    }
+
+    async function getAllPlayers() {
+        if (firebaseReady) {
+            try {
+                const snapshot = await db.ref('players').once('value');
+                const data = snapshot.val();
+                return data ? Object.values(data) : [];
+            } catch(e) {
+                console.warn('Firebase read all failed:', e);
+            }
+        }
+        // Fallback
+        const players = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('mathSurvival_player_')) {
+                players.push(JSON.parse(localStorage.getItem(key)));
+            }
+        }
+        return players;
+    }
+
+    async function deleteAllPlayers() {
+        if (firebaseReady) {
+            try {
+                await db.ref('players').remove();
+            } catch(e) {
+                console.warn('Firebase delete all failed:', e);
+            }
+        }
+        // Also clear localStorage
+        const keysToRemove = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('mathSurvival_player_')) {
+                keysToRemove.push(key);
+            }
+        }
+        keysToRemove.forEach(k => localStorage.removeItem(k));
+    }
+
+    function sanitizeKey(name) {
+        return name.toLowerCase().replace(/[^a-z0-9]/g, '_');
+    }
+
+    // ========================================
+    // LEVEL SYSTEM
+    // ========================================
+    function renderLevels() {
+        const grid = document.getElementById('levelGrid');
+        const player = gameState.currentPlayer;
+        const totalScore = player ? (player.totalScore || 0) : 0;
+
+        grid.innerHTML = LEVELS.map(level => {
+            const unlocked = totalScore >= level.unlockScore;
+            const stars = player && player.levelStars ? (player.levelStars[level.id] || 0) : 0;
+            const starDisplay = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+
+            return `
+                <div class="level-card ${unlocked ? '' : 'locked'}" onclick="${unlocked ? `startLevel(${level.id})` : ''}">
+                    <div class="level-icon">${level.icon}</div>
+                    <div class="level-info">
+                        <h4>Level ${level.id}: ${level.name}</h4>
+                        <p>${level.desc}</p>
+                        <p style="font-size:0.7em; color:${unlocked ? 'var(--success)' : 'var(--danger)'};">
+                            ${unlocked ? '✅ Terbuka' : `🔒 Butuh ${level.unlockScore} poin`}
+                        </p>
+                    </div>
+                    <div class="level-stars">${stars > 0 ? starDisplay : ''}</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // ========================================
+    // GAME ENGINE
+    // ========================================
+    function startLevel(levelId) {
+        const level = LEVELS.find(l => l.id === levelId);
+        if (!level) return;
+
+        gameState.currentLevel = levelId;
+        gameState.currentQuestion = 0;
+        gameState.health = 3;
+        gameState.maxHealth = 3;
+        gameState.score = 0;
+        gameState.combo = 0;
+        gameState.bestCombo = 0;
+        gameState.correctAnswers = 0;
+        gameState.wrongAnswers = 0;
+        gameState.questionResults = [];
+        gameState.totalTime = 0;
+        gameState.maxTime = level.timePerQuestion;
+        gameState.powerups = { '5050': 3, 'skip': 2, 'time': 2, 'heal': 1 };
+        gameState.answerLocked = false;
+
+        showScreen('gameScreen');
+        renderProgressDots();
+        nextQuestion();
+    }
+
+    function renderProgressDots() {
+        const dots = document.getElementById('progressDots');
+        dots.innerHTML = '';
+        for (let i = 0; i < gameState.totalQuestions; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'progress-dot';
+            if (i < gameState.questionResults.length) {
+                dot.classList.add(gameState.questionResults[i] ? 'correct' : 'wrong');
+            } else if (i === gameState.currentQuestion) {
+                dot.classList.add('current');
+            }
+            dots.appendChild(dot);
+        }
+    }
+
+    function nextQuestion() {
+        if (gameState.currentQuestion >= gameState.totalQuestions || gameState.health <= 0) {
+            endGame();
+            return;
+        }
+
+        gameState.answerLocked = false;
+        const level = LEVELS.find(l => l.id === gameState.currentLevel);
+        const qData = generateQuestion(level.category, level.difficulty);
+        gameState.currentQuestionData = qData;
+
+        // Update HUD
+        document.getElementById('hudHealth').textContent = gameState.health;
+        document.getElementById('hudScore').textContent = gameState.score;
+        document.getElementById('hudQuestion').textContent = `${gameState.currentQuestion + 1}/${gameState.totalQuestions}`;
+
+        // Update health bar
+        const healthPercent = (gameState.health / gameState.maxHealth) * 100;
+        const healthBar = document.getElementById('healthBar');
+        healthBar.style.width = healthPercent + '%';
+        healthBar.className = 'health-bar ' + (healthPercent > 66 ? 'high' : healthPercent > 33 ? 'medium' : 'low');
+
+        // Update combo
+        if (gameState.combo >= 2) {
+            document.getElementById('comboDisplay').innerHTML =
+                `<span class="combo-text">🔥 Kombo x${gameState.combo}!</span>`;
+        } else {
+            document.getElementById('comboDisplay').innerHTML = '';
+        }
+
+        // Question card
+        const categoryNames = {
+            'penjumlahan': '➕ Penjumlahan',
+            'pengurangan': '➖ Pengurangan',
+            'penjumlahan_lanjut': '🔢 Penjumlahan Lanjut',
+            'pengurangan_lanjut': '🔻 Pengurangan Lanjut',
+            'perkalian': '✖️ Perkalian',
+            'pembagian': '➗ Pembagian',
+            'pengukuran': '📏 Pengukuran',
+            'pecahan': '🥧 Pecahan',
+            'campuran': '🎲 Campuran',
+            'survival': '💀 Survival'
+        };
+
+        document.getElementById('questionCategory').textContent = categoryNames[qData.category] || qData.category;
+        document.getElementById('questionText').textContent = qData.question;
+        document.getElementById('questionHint').textContent = qData.hintText || '';
+
+        // Render answers
+        const answersGrid = document.getElementById('answersGrid');
+        answersGrid.innerHTML = qData.options.map((opt, idx) =>
+            `<button class="answer-btn" onclick="checkAnswer(${opt}, this)" data-value="${opt}">${opt}</button>`
+        ).join('');
+
+        // Update powerup badges
+        updatePowerupBadges();
+
+        // Start timer
+        gameState.questionStartTime = Date.now();
+        if (gameState.settings.timer) {
+            startTimer();
+        }
+
+        // Animate question card
+        document.getElementById('questionCard').style.animation = 'none';
+        setTimeout(() => {
+            document.getElementById('questionCard').style.animation = 'bounceIn 0.5s ease';
+        }, 10);
+
+        renderProgressDots();
+    }
+
+    function checkAnswer(selectedAnswer, btnElement) {
+        if (gameState.answerLocked) return;
+        gameState.answerLocked = true;
+
+        stopGameTimer();
+
+        const correct = gameState.currentQuestionData.answer;
+        const isCorrect = selectedAnswer === correct;
+        const timeTaken = (Date.now() - gameState.questionStartTime) / 1000;
+        gameState.totalTime += timeTaken;
+
+        // Highlight buttons
+        document.querySelectorAll('.answer-btn').forEach(btn => {
+            btn.disabled = true;
+            if (parseInt(btn.dataset.value) === correct) {
+                btn.classList.add('correct');
+            }
+        });
+
+        if (isCorrect) {
+            if (btnElement) btnElement.classList.add('correct');
+            gameState.combo++;
+            if (gameState.combo > gameState.bestCombo) gameState.bestCombo = gameState.combo;
+            gameState.correctAnswers++;
+
+            // Score calculation
+            let points = 10;
+            if (gameState.combo >= 5) points = 25;
+            else if (gameState.combo >= 3) points = 20;
+            else if (gameState.combo >= 2) points = 15;
+
+            // Time bonus
+            if (timeTaken < 5) points += 10;
+            else if (timeTaken < 10) points += 5;
+
+            gameState.score += points;
+            gameState.questionResults.push(true);
+
+            playSound('correct');
+            showToast(`+${points} poin! ✅`, 'success');
+
+            // Combo milestones
+            if (gameState.combo === 3) showAchievement('🔥', 'Kombo x3!', '3 jawaban benar berturut-turut!');
+            if (gameState.combo === 5) showAchievement('⚡', 'Kombo x5!', '5 jawaban benar berturut-turut!');
+            if (gameState.combo === 8) showAchievement('💎', 'LUAR BIASA!', '8 jawaban benar berturut-turut!');
+
+        } else {
+            if (btnElement) btnElement.classList.add('wrong');
+            gameState.combo = 0;
+            gameState.wrongAnswers++;
+            gameState.health--;
+            gameState.questionResults.push(false);
+
+            playSound('wrong');
+            showToast(`Jawaban benar: ${correct} ❌`, 'error');
+
+            // Shake screen
+            document.getElementById('gameScreen').style.animation = 'shake 0.5s ease';
+            setTimeout(() => {
+                document.getElementById('gameScreen').style.animation = '';
+            }, 500);
+        }
+
+        gameState.currentQuestion++;
+
+        // Next question after delay
+        setTimeout(() => {
+            nextQuestion();
+        }, 1500);
+    }
+
+    function startTimer() {
+        stopGameTimer();
+        gameState.timeLeft = gameState.maxTime;
+        const timerBar = document.getElementById('timerBar');
+        timerBar.style.width = '100%';
+
+        gameState.timerInterval = setInterval(() => {
+            gameState.timeLeft -= 0.1;
+            const percent = (gameState.timeLeft / gameState.maxTime) * 100;
+            timerBar.style.width = Math.max(0, percent) + '%';
+
+            if (gameState.timeLeft <= 0) {
+                stopGameTimer();
+                if (!gameState.answerLocked) {
+                    gameState.answerLocked = true;
+                    gameState.combo = 0;
+                    gameState.wrongAnswers++;
+                    gameState.health--;
+                    gameState.questionResults.push(false);
+                    gameState.totalTime += gameState.maxTime;
+
+                    playSound('wrong');
+                    showToast(`⏰ Waktu habis! Jawaban: ${gameState.currentQuestionData.answer}`, 'error');
+
+                    document.querySelectorAll('.answer-btn').forEach(btn => {
+                        btn.disabled = true;
+                        if (parseInt(btn.dataset.value) === gameState.currentQuestionData.answer) {
+                            btn.classList.add('correct');
+                        }
+                    });
+
+                    gameState.currentQuestion++;
+                    setTimeout(() => nextQuestion(), 1500);
+                }
+            }
+        }, 100);
+    }
+
+    function stopGameTimer() {
+        if (gameState.timerInterval) {
+            clearInterval(gameState.timerInterval);
+            gameState.timerInterval = null;
+        }
+    }
+
+    // ========================================
+    // POWER-UPS
+    // ========================================
+    function usePowerup(type) {
+        if (gameState.answerLocked) return;
+        if (gameState.powerups[type] <= 0) {
+            showToast('Power-up sudah habis! 😅', 'warning');
+            return;
+        }
+
+        gameState.powerups[type]--;
+
+        switch(type) {
+            case '5050': {
+                const correct = gameState.currentQuestionData.answer;
+                const buttons = [...document.querySelectorAll('.answer-btn')];
+                const wrongButtons = buttons.filter(b => parseInt(b.dataset.value) !== correct);
+                const toHide = shuffle(wrongButtons).slice(0, 2);
+                toHide.forEach(b => {
+                    b.style.opacity = '0.2';
+                    b.disabled = true;
+                });
+                showToast('✂️ 2 jawaban salah dihapus!', 'info');
+                break;
+            }
+            case 'skip': {
+                stopGameTimer();
+                gameState.answerLocked = true;
+                gameState.questionResults.push(null);
+                gameState.currentQuestion++;
+                showToast('⏭️ Soal dilewati!', 'info');
+                setTimeout(() => nextQuestion(), 800);
+                break;
+            }
+            case 'time': {
+                gameState.timeLeft = Math.min(gameState.timeLeft + 15, gameState.maxTime);
+                showToast('⏰ +15 detik!', 'info');
+                break;
+            }
+            case 'heal': {
+                gameState.health = Math.min(gameState.health + 1, gameState.maxHealth);
+                document.getElementById('hudHealth').textContent = gameState.health;
+                const healthPercent = (gameState.health / gameState.maxHealth) * 100;
+                const healthBar = document.getElementById('healthBar');
+                healthBar.style.width = healthPercent + '%';
+                healthBar.className = 'health-bar ' + (healthPercent > 66 ? 'high' : healthPercent > 33 ? 'medium' : 'low');
+                showToast('💖 +1 nyawa!', 'success');
+                break;
+            }
+        }
+
+        updatePowerupBadges();
+    }
+
+    function updatePowerupBadges() {
+        document.getElementById('badge5050').textContent = gameState.powerups['5050'];
+        document.getElementById('badgeSkip').textContent = gameState.powerups.skip;
+        document.getElementById('badgeTime').textContent = gameState.powerups.time;
+        document.getElementById('badgeHeal').textContent = gameState.powerups.heal;
+
+        document.getElementById('powerup5050').disabled = gameState.powerups['5050'] <= 0;
+        document.getElementById('powerupSkip').disabled = gameState.powerups.skip <= 0;
+        document.getElementById('powerupTime').disabled = gameState.powerups.time <= 0;
+        document.getElementById('powerupHeal').disabled = gameState.powerups.heal <= 0;
+    }
+
+    // ========================================
+    // GAME OVER
+    // ========================================
+    async function endGame() {
+        stopGameTimer();
+
+        const correct = gameState.correctAnswers;
+        const total = gameState.totalQuestions;
+        const percentage = Math.round((correct / total) * 100);
+        const avgTime = gameState.totalTime > 0 ? (gameState.totalTime / total).toFixed(1) : 0;
+
+        // Calculate stars
+        let stars = 0;
+        if (percentage >= 30) stars = 1;
+        if (percentage >= 60) stars = 2;
+        if (percentage >= 90) stars = 3;
+
+        // Update UI
+        let emoji, title, message;
+        if (percentage >= 90) {
+            emoji = '🏆'; title = 'SEMPURNA!'; message = 'Kamu luar biasa hebat!';
+        } else if (percentage >= 70) {
+            emoji = '🎉'; title = 'Hebat!'; message = 'Kerja bagus, terus berlatih!';
+        } else if (percentage >= 50) {
+            emoji = '😊'; title = 'Bagus!'; message = 'Sudah cukup baik, ayo tingkatkan!';
+        } else if (percentage >= 30) {
+            emoji = '💪'; title = 'Semangat!'; message = 'Jangan menyerah, coba lagi!';
+        } else {
+            emoji = '😅'; title = 'Coba Lagi!'; message = 'Ayo belajar lebih giat ya!';
+        }
+
+        document.getElementById('resultEmoji').textContent = emoji;
+        document.getElementById('resultTitle').textContent = title;
+        document.getElementById('resultMessage').textContent = message;
+        document.getElementById('statScore').textContent = gameState.score;
+        document.getElementById('statCorrect').textContent = `${correct}/${total}`;
+        document.getElementById('statCombo').textContent = gameState.bestCombo;
+        document.getElementById('statTime').textContent = avgTime + 's';
+        document.getElementById('starsDisplay').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+
+        // Save progress
+        if (gameState.currentPlayer) {
+            const p = gameState.currentPlayer;
+            p.totalScore = (p.totalScore || 0) + gameState.score;
+            p.totalCorrect = (p.totalCorrect || 0) + correct;
+            p.totalPlayed = (p.totalPlayed || 0) + 1;
+            if (gameState.currentLevel >= (p.highestLevel || 1) && stars >= 2) {
+                p.highestLevel = Math.min(gameState.currentLevel + 1, LEVELS.length);
+            }
+            if (!p.levelStars) p.levelStars = {};
+            const prevStars = p.levelStars[gameState.currentLevel] || 0;
+            if (stars > prevStars) {
+                p.levelStars[gameState.currentLevel] = stars;
+            }
+
+            // Save game history
+            if (!p.gameHistory) p.gameHistory = [];
+            p.gameHistory.push({
+                level: gameState.currentLevel,
+                levelName: LEVELS.find(l => l.id === gameState.currentLevel)?.name || '',
+                score: gameState.score,
+                correct: correct,
+                total: total,
+                percentage: percentage,
+                stars: stars,
+                bestCombo: gameState.bestCombo,
+                avgTime: parseFloat(avgTime),
+                date: new Date().toISOString()
+            });
+            // Keep last 50 games
+            if (p.gameHistory.length > 50) p.gameHistory = p.gameHistory.slice(-50);
+
+            await savePlayerData(p);
+        }
+
+        showScreen('gameOverScreen');
+    }
+
+    function retryLevel() {
+        startLevel(gameState.currentLevel);
+    }
+
+    // ========================================
+    // PROGRESS SCREEN
+    // ========================================
+    function renderProgress() {
+        const p = gameState.currentPlayer;
+        if (!p) return;
+
+        const content = document.getElementById('progressContent');
+        const history = p.gameHistory || [];
+        const recentGames = history.slice(-5).reverse();
+
+        let html = `
+            <div class="card">
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-value">${p.totalScore || 0}</div>
+                        <div class="stat-label">Total Score</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${p.totalPlayed || 0}</div>
+                        <div class="stat-label">Total Main</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${p.totalCorrect || 0}</div>
+                        <div class="stat-label">Total Benar</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">${p.highestLevel || 1}</div>
+                        <div class="stat-label">Level Tertinggi</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3 style="font-family:'Fredoka One',cursive; color:var(--secondary); margin-bottom:12px;">📜 Riwayat Bermain</h3>
+        `;
+
+        if (recentGames.length === 0) {
+            html += '<p style="color:var(--text-muted); text-align:center;">Belum ada riwayat bermain</p>';
+        } else {
+            recentGames.forEach(g => {
+                const date = new Date(g.date);
+                const dateStr = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+                const timeStr = date.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                const starStr = '⭐'.repeat(g.stars) + '☆'.repeat(3 - g.stars);
+                html += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid rgba(108,92,231,0.1);">
+                        <div>
+                            <div style="font-weight:700; font-size:0.9em;">${g.levelName || 'Level ' + g.level}</div>
+                            <div style="font-size:0.7em; color:var(--text-muted);">${dateStr} ${timeStr}</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="font-weight:800; color:var(--warning);">${g.score} pts</div>
+                            <div style="font-size:0.8em;">${g.correct}/${g.total} (${g.percentage}%) ${starStr}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        html += '</div>';
+
+        // Level Stars
+        html += '<div class="card"><h3 style="font-family:\'Fredoka One\',cursive; color:var(--secondary); margin-bottom:12px;">⭐ Bintang Level</h3>';
+        LEVELS.forEach(level => {
+            const stars = (p.levelStars && p.levelStars[level.id]) || 0;
+            const starStr = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+            html += `
+                <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid rgba(108,92,231,0.05);">
+                    <div style="font-size:0.85em;">${level.icon} ${level.name}</div>
+                    <div>${stars > 0 ? starStr : '—'}</div>
+                </div>
+            `;
+        });
+        html += '</div>';
+
+        content.innerHTML = html;
+    }
+
+    // ========================================
+    // LEADERBOARD
+    // ========================================
+    async function loadLeaderboard() {
+        const content = document.getElementById('leaderboardContent');
+        content.innerHTML = '<div style="text-align:center; padding:30px;"><div class="spinner"></div><p style="color:var(--text-muted); margin-top:10px;">Memuat data...</p></div>';
+
+        const players = await getAllPlayers();
+        const sorted = players.sort((a, b) => (b.totalScore || 0) - (a.totalScore || 0));
+
+        if (sorted.length === 0) {
+            content.innerHTML = '<div class="card" style="text-align:center;"><p style="color:var(--text-muted);">Belum ada pemain. Jadilah yang pertama! 🎮</p></div>';
+            return;
+        }
+
+        let html = '<div class="card" style="overflow-x:auto;"><table class="score-table"><thead><tr><th>#</th><th>Pemain</th><th>Score</th><th>Main</th><th>Benar</th></tr></thead><tbody>';
+
+        sorted.forEach((p, idx) => {
+            const rank = idx + 1;
+            const rankClass = rank <= 3 ? `rank-${rank}` : 'rank-other';
+            const medal = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : '';
+            const isCurrentPlayer = gameState.currentPlayer && p.name === gameState.currentPlayer.name;
+
+            html += `
+                <tr style="${isCurrentPlayer ? 'background:rgba(108,92,231,0.15);' : ''}">
+                    <td><span class="rank-badge ${rankClass}">${medal || rank}</span></td>
+                    <td>${p.avatar || '👤'} ${p.name} ${isCurrentPlayer ? '(Kamu)' : ''}</td>
+                    <td style="font-weight:800; color:var(--warning);">${p.totalScore || 0}</td>
+                    <td>${p.totalPlayed || 0}</td>
+                    <td>${p.totalCorrect || 0}</td>
+                </tr>
+            `;
+        });
+
+        html += '</tbody></table></div>';
+        content.innerHTML = html;
+    }
+
+    // ========================================
+    // ADMIN PANEL
+    // ========================================
+    function showAdminLogin() {
+        const modal = document.getElementById('modalContent');
+        modal.innerHTML = `
+            <h3>🔐 Login Admin</h3>
+            <div class="input-group">
+                <label>Password Admin</label>
+                <input type="password" id="adminPasswordInput" placeholder="Masukkan password..." onkeypress="if(event.key==='Enter') verifyAdmin()">
+            </div>
+            <p style="font-size:0.75em; color:var(--text-muted); margin-bottom:15px;">Default password: admin123</p>
+            <button class="btn btn-primary" onclick="verifyAdmin()">🔓 Masuk</button>
+            <button class="btn btn-outline" onclick="closeModal()" style="margin-top:5px;">Batal</button>
+        `;
+        openModal();
+    }
+
+    function verifyAdmin() {
+        const pwd = document.getElementById('adminPasswordInput').value;
+        // Simple password check - in production, use proper auth
+        if (pwd === 'admin123') {
+            closeModal();
+            showScreen('adminScreen');
+        } else {
+            showToast('Password salah! ❌', 'error');
+        }
+    }
+
+    async function loadAdminData() {
+        const content = document.getElementById('adminContent');
+        content.innerHTML = '<div style="text-align:center; padding:30px;"><div class="spinner"></div><p style="color:var(--text-muted); margin-top:10px;">Memuat data pemain...</p></div>';
+
+        const players = await getAllPlayers();
+        const sorted = players.sort((a, b) => (b.totalScore || 0) - (a.totalScore || 0));
+
+        renderAdminTable(sorted, 'adminContent');
+    }
+
+    function renderAdminTable(players, containerId) {
+        const content = document.getElementById(containerId);
+
+        if (players.length === 0) {
+            content.innerHTML = '<div class="card" style="text-align:center;"><p style="color:var(--text-muted);">Belum ada data pemain.</p></div>';
+            return;
+        }
+
+        let html = `<div class="card" style="overflow-x:auto;">
+            <p style="margin-bottom:10px; color:var(--text-muted); font-size:0.85em;">Total pemain: <strong>${players.length}</strong></p>
+            <table class="score-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Score</th>
+                        <th>Main</th>
+                        <th>Benar</th>
+                        <th>Level</th>
+                        <th>Terakhir</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+
+        players.forEach((p, idx) => {
+            const rank = idx + 1;
+            const rankClass = rank <= 3 ? `rank-${rank}` : 'rank-other';
+            const lastPlayed = p.lastPlayed ? new Date(p.lastPlayed).toLocaleDateString('id-ID', { day:'numeric', month:'short' }) : '-';
+            const accuracy = p.totalPlayed > 0 ? Math.round(((p.totalCorrect || 0) / ((p.totalPlayed || 1) * 10)) * 100) : 0;
+
+            html += `
+                <tr>
+                    <td><span class="rank-badge ${rankClass}">${rank}</span></td>
+                    <td>${p.avatar || '👤'} ${p.name}</td>
+                    <td style="font-weight:800; color:var(--warning);">${p.totalScore || 0}</td>
+                    <td>${p.totalPlayed || 0}</td>
+                    <td>${p.totalCorrect || 0} (${accuracy}%)</td>
+                    <td>${p.highestLevel || 1}</td>
+                    <td style="font-size:0.75em;">${lastPlayed}</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning" onclick="printSinglePlayer('${sanitizeKey(p.name)}')" style="font-size:0.7em; padding:4px 8px;">🖨️</button>
+                    </td>
+                </tr>
+            `;
+        });
+
+        html += '</tbody></table></div>';
+        content.innerHTML = html;
+    }
+
+    async function filterAdminPlayers() {
+        const search = document.getElementById('adminSearch').value.toLowerCase();
+        const players = await getAllPlayers();
+        const filtered = players.filter(p => p.name.toLowerCase().includes(search));
+        const sorted = filtered.sort((a, b) => (b.totalScore || 0) - (a.totalScore || 0));
+        renderAdminTable(sorted, 'adminContent');
+    }
+
+    async function refreshAdminData() {
+        showToast('Data diperbarui! 🔄', 'info');
+        await loadAdminData();
+    }
+
+    async function clearAllData() {
+        if (confirm('⚠️ Yakin ingin menghapus SEMUA data pemain? Tindakan ini tidak bisa dibatalkan!')) {
+            await deleteAllPlayers();
+            showToast('Semua data berhasil dihapus!', 'success');
+            loadAdminData();
+        }
+    }
+
+    // ========================================
+    // PRINT FUNCTIONS
+    // ========================================
+    function printPlayerScore() {
+        const p = gameState.currentPlayer;
+        if (!p) return;
+
+        const history = p.gameHistory || [];
+        const printArea = document.getElementById('printArea');
+
+        let html = `
+            <div style="font-family: Arial, sans-serif; max-width:800px; margin:0 auto;">
+                <div style="text-align:center; margin-bottom:20px; border-bottom:2px solid #333; padding-bottom:15px;">
+                    <h1 style="margin:0; font-size:1.5em;">📊 LAPORAN NILAI MATH SURVIVAL</h1>
+                    <h2 style="margin:5px 0; font-size:1.1em; color:#666;">Matematika Kelas 3 SD - Semester 1</h2>
+                    <p style="margin:5px 0; font-size:0.8em; color:#999;">Dicetak: ${new Date().toLocaleDateString('id-ID', { weekday:'long', day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' })}</p>
+                </div>
+
+                <div style="margin-bottom:20px; background:#f9f9f9; padding:15px; border-radius:8px;">
+                    <h3 style="margin:0 0 10px;">Data Pemain</h3>
+                    <table style="width:100%; font-size:0.9em;">
+                        <tr><td style="padding:4px; width:150px;"><strong>Nama</strong></td><td>: ${p.avatar || ''} ${p.name}</td></tr>
+                        <tr><td style="padding:4px;"><strong>Total Score</strong></td><td>: ${p.totalScore || 0}</td></tr>
+                        <tr><td style="padding:4px;"><strong>Total Bermain</strong></td><td>: ${p.totalPlayed || 0} kali</td></tr>
+                        <tr><td style="padding:4px;"><strong>Total Benar</strong></td><td>: ${p.totalCorrect || 0} soal</td></tr>
+                        <tr><td style="padding:4px;"><strong>Level Tertinggi</strong></td><td>: ${p.highestLevel || 1}</td></tr>
+                        <tr><td style="padding:4px;"><strong>Terakhir Main</strong></td><td>: ${p.lastPlayed ? new Date(p.lastPlayed).toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' }) : '-'}</td></tr>
+                    </table>
+                </div>
+        `;
+
+        // Level Stars
+        html += '<div style="margin-bottom:20px;"><h3>Pencapaian Level</h3><table style="width:100%; border-collapse:collapse; font-size:0.85em;"><tr style="background:#f0f0f0;"><th style="border:1px solid #ddd; padding:8px; text-align:left;">Level</th><th style="border:1px solid #ddd; padding:8px; text-align:center;">Bintang</th></tr>';
+        LEVELS.forEach(level => {
+            const stars = (p.levelStars && p.levelStars[level.id]) || 0;
+            const starStr = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+            html += `<tr><td style="border:1px solid #ddd; padding:6px;">${level.name}</td><td style="border:1px solid #ddd; padding:6px; text-align:center;">${stars > 0 ? starStr : '-'}</td></tr>`;
+        });
+        html += '</table></div>';
+
+        // Game History
+        if (history.length > 0) {
+            html += '<div style="margin-bottom:20px;"><h3>Riwayat Bermain</h3><table style="width:100%; border-collapse:collapse; font-size:0.8em;"><tr style="background:#f0f0f0;"><th style="border:1px solid #ddd; padding:6px;">No</th><th style="border:1px solid #ddd; padding:6px;">Tanggal</th><th style="border:1px solid #ddd; padding:6px;">Level</th><th style="border:1px solid #ddd; padding:6px;">Score</th><th style="border:1px solid #ddd; padding:6px;">Benar</th><th style="border:1px solid #ddd; padding:6px;">%</th><th style="border:1px solid #ddd; padding:6px;">Bintang</th><th style="border:1px solid #ddd; padding:6px;">Nilai</th></tr>';
+            history.forEach((g, idx) => {
+                const date = new Date(g.date).toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' });
+                const starStr = '⭐'.repeat(g.stars) + '☆'.repeat(3 - g.stars);
+                const grade = g.percentage >= 90 ? 'A' : g.percentage >= 80 ? 'B' : g.percentage >= 70 ? 'C' : g.percentage >= 60 ? 'D' : 'E';
+                html += `<tr><td style="border:1px solid #ddd; padding:5px; text-align:center;">${idx+1}</td><td style="border:1px solid #ddd; padding:5px;">${date}</td><td style="border:1px solid #ddd; padding:5px;">${g.levelName || 'Level '+g.level}</td><td style="border:1px solid #ddd; padding:5px; text-align:center;">${g.score}</td><td style="border:1px solid #ddd; padding:5px; text-align:center;">${g.correct}/${g.total}</td><td style="border:1px solid #ddd; padding:5px; text-align:center;">${g.percentage}%</td><td style="border:1px solid #ddd; padding:5px; text-align:center;">${starStr}</td><td style="border:1px solid #ddd; padding:5px; text-align:center; font-weight:bold;">${grade}</td></tr>`;
+            });
+            html += '</table></div>';
+        }
+
+        html += `
+                <div style="margin-top:30px; display:flex; justify-content:space-between;">
+                    <div style="text-align:center;">
+                        <p>Mengetahui,</p>
+                        <br><br><br>
+                        <p style="border-top:1px solid #333; padding-top:5px;">(Guru/Orang Tua)</p>
+                    </div>
+                    <div style="text-align:center;">
+                        <p>Surabaya, ${new Date().toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' })}</p>
+                        <br><br><br>
+                        <p style="border-top:1px solid #333; padding-top:5px;">(${p.name})</p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        printArea.innerHTML = html;
+        window.print();
+        setTimeout(() => { printArea.innerHTML = ''; }, 1000);
+    }
+
+    async function printAllScores() {
+        const players = await getAllPlayers();
+        const sorted = players.sort((a, b) => (b.totalScore || 0) - (a.totalScore || 0));
+        const printArea = document.getElementById('printArea');
+
+        let html = `
+            <div style="font-family: Arial, sans-serif; max-width:900px; margin:0 auto;">
+                <div style="text-align:center; margin-bottom:20px; border-bottom:2px solid #333; padding-bottom:15px;">
+                    <h1 style="margin:0; font-size:1.5em;">📊 REKAP NILAI MATH SURVIVAL</h1>
+                    <h2 style="margin:5px 0; font-size:1.1em; color:#666;">Matematika Kelas 3 SD - Semester 1</h2>
+                    <p style="margin:5px 0; font-size:0.8em; color:#999;">Dicetak: ${new Date().toLocaleDateString('id-ID', { weekday:'long', day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit' })}</p>
+                </div>
+
+                <table style="width:100%; border-collapse:collapse; font-size:0.85em;">
+                    <thead>
+                        <tr style="background:#f0f0f0;">
+                            <th style="border:1px solid #ddd; padding:8px; text-align:center;">No</th>
+                            <th style="border:1px solid #ddd; padding:8px;">Nama Pemain</th>
+                            <th style="border:1px solid #ddd; padding:8px; text-align:center;">Total Score</th>
+                            <th style="border:1px solid #ddd; padding:8px; text-align:center;">Jumlah Main</th>
+                            <th style="border:1px solid #ddd; padding:8px; text-align:center;">Total Benar</th>
+                            <th style="border:1px solid #ddd; padding:8px; text-align:center;">Level Tertinggi</th>
+                            <th style="border:1px solid #ddd; padding:8px; text-align:center;">Rata-rata Akurasi</th>
+                            <th style="border:1px solid #ddd; padding:8px; text-align:center;">Nilai</th>
+                            <th style="border:1px solid #ddd; padding:8px; text-align:center;">Terakhir Main</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+
+        sorted.forEach((p, idx) => {
+            const totalQuestions = (p.totalPlayed || 0) * 10;
+            const accuracy = totalQuestions > 0 ? Math.round(((p.totalCorrect || 0) / totalQuestions) * 100) : 0;
+            const grade = accuracy >= 90 ? 'A' : accuracy >= 80 ? 'B' : accuracy >= 70 ? 'C' : accuracy >= 60 ? 'D' : 'E';
+            const lastPlayed = p.lastPlayed ? new Date(p.lastPlayed).toLocaleDateString('id-ID', { day:'numeric', month:'short', year:'numeric' }) : '-';
+
+            html += `
+                <tr>
+                    <td style="border:1px solid #ddd; padding:6px; text-align:center;">${idx + 1}</td>
+                    <td style="border:1px solid #ddd; padding:6px;">${p.avatar || ''} ${p.name}</td>
+                    <td style="border:1px solid #ddd; padding:6px; text-align:center; font-weight:bold;">${p.totalScore || 0}</td>
+                    <td style="border:1px solid #ddd; padding:6px; text-align:center;">${p.totalPlayed || 0}</td>
+                    <td style="border:1px solid #ddd; padding:6px; text-align:center;">${p.totalCorrect || 0}</td>
+                    <td style="border:1px solid #ddd; padding:6px; text-align:center;">${p.highestLevel || 1}</td>
+                    <td style="border:1px solid #ddd; padding:6px; text-align:center;">${accuracy}%</td>
+                    <td style="border:1px solid #ddd; padding:6px; text-align:center; font-weight:bold;">${grade}</td>
+                    <td style="border:1px solid #ddd; padding:6px; text-align:center;">${lastPlayed}</td>
+                </tr>
+            `;
+        });
+
+        html += `
+                    </tbody>
+                </table>
+
+                <div style="margin-top:20px; padding:10px; background:#f9f9f9; border-radius:5px; font-size:0.8em;">
+                    <strong>Keterangan:</strong><br>
+                    A = 90-100% (Sangat Baik) | B = 80-89% (Baik) | C = 70-79% (Cukup) | D = 60-69% (Kurang) | E = &lt;60% (Perlu Belajar Lagi)
+                </div>
+
+                <div style="margin-top:40px; display:flex; justify-content:space-between;">
+                    <div style="text-align:center;">
+                        <p>Mengetahui,</p>
+                        <br><br><br>
+                        <p style="border-top:1px solid #333; padding-top:5px;">(Guru Kelas)</p>
+                    </div>
+                    <div style="text-align:center;">
+                        <p>Surabaya, ${new Date().toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' })}</p>
+                        <br><br><br>
+                        <p style="border-top:1px solid #333; padding-top:5px;">(Kepala Sekolah)</p>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        printArea.innerHTML = html;
+        window.print();
+        setTimeout(() => { printArea.innerHTML = ''; }, 1000);
+    }
+
+    async function printSinglePlayer(key) {
+        const players = await getAllPlayers();
+        const player = players.find(p => sanitizeKey(p.name) === key);
+        if (!player) return;
+
+        // Temporarily set as current player for printing
+        const original = gameState.currentPlayer;
+        gameState.currentPlayer = player;
+        printPlayerScore();
+        gameState.currentPlayer = original;
+    }
+
+    // ========================================
+    // SETTINGS
+    // ========================================
+    function toggleSetting(setting) {
+        gameState.settings[setting] = !gameState.settings[setting];
+        const toggle = document.getElementById('toggle' + setting.charAt(0).toUpperCase() + setting.slice(1));
+        toggle.classList.toggle('active');
+        localStorage.setItem('mathSurvival_settings', JSON.stringify(gameState.settings));
+    }
+
+    function loadSettings() {
+        const saved = localStorage.getItem('mathSurvival_settings');
+        if (saved) {
+            gameState.settings = JSON.parse(saved);
+            Object.keys(gameState.settings).forEach(key => {
+                const toggle = document.getElementById('toggle' + key.charAt(0).toUpperCase() + key.slice(1));
+                if (toggle) {
+                    if (gameState.settings[key]) toggle.classList.add('active');
+                    else toggle.classList.remove('active');
+                }
+            });
+        }
+    }
+
+    function resetProgress() {
+        if (confirm('⚠️ Yakin ingin reset semua progress? Data tidak bisa dikembalikan!')) {
+            if (gameState.currentPlayer) {
+                gameState.currentPlayer.totalScore = 0;
+                gameState.currentPlayer.totalCorrect = 0;
+                gameState.currentPlayer.totalPlayed = 0;
+                gameState.currentPlayer.highestLevel = 1;
+                gameState.currentPlayer.levelStars = {};
+                gameState.currentPlayer.gameHistory = [];
+                savePlayerData(gameState.currentPlayer);
+                showToast('Progress berhasil direset!', 'success');
+                updateMenuInfo();
+            }
+        }
+    }
+
+    // ========================================
+    // UI HELPERS
+    // ========================================
+    function showToast(message, type = 'info') {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.className = 'toast ' + type + ' show';
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2500);
+    }
+
+    function showAchievement(icon, title, desc) {
+        const popup = document.getElementById('achievementPopup');
+        document.getElementById('achievementIcon').textContent = icon;
+        document.getElementById('achievementTitle').textContent = title;
+        document.getElementById('achievementDesc').textContent = desc;
+        popup.classList.add('show');
+        setTimeout(() => {
+            popup.classList.remove('show');
+        }, 2500);
+    }
+
+    function openModal() {
+        document.getElementById('modalOverlay').classList.add('active');
+    }
+
+    function closeModal() {
+        document.getElementById('modalOverlay').classList.remove('active');
+    }
+
+    // ========================================
+    // SOUND EFFECTS (Simple Web Audio)
+    // ========================================
+    let audioCtx;
+
+    function playSound(type) {
+        if (!gameState.settings.sound) return;
+        try {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+
+            if (type === 'correct') {
+                oscillator.frequency.setValueAtTime(523, audioCtx.currentTime);
+                oscillator.frequency.setValueAtTime(659, audioCtx.currentTime + 0.1);
+                oscillator.frequency.setValueAtTime(784, audioCtx.currentTime + 0.2);
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.4);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.4);
+            } else if (type === 'wrong') {
+                oscillator.frequency.setValueAtTime(200, audioCtx.currentTime);
+                oscillator.frequency.setValueAtTime(150, audioCtx.currentTime + 0.15);
+                oscillator.type = 'sawtooth';
+                gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+                oscillator.start(audioCtx.currentTime);
+                oscillator.stop(audioCtx.currentTime + 0.3);
+            }
+        } catch(e) {
+            // Audio not supported
+        }
+    }
+
+    // ========================================
+    // INITIALIZATION
+    // ========================================
+    async function init() {
+        loadSettings();
+
+        // Check for returning player
+        const savedPlayer = localStorage.getItem('mathSurvival_currentPlayer');
+        if (savedPlayer) {
+            const playerData = await getPlayerData(savedPlayer);
+            if (playerData) {
+                gameState.currentPlayer = { name: savedPlayer, ...playerData };
+                setTimeout(() => {
+                    showScreen('menuScreen');
+                    showToast(`Selamat datang kembali, ${savedPlayer}! 🎮`, 'success');
+                }, 800);
+                return;
+            }
+        }
+
+        // Show login screen
+        setTimeout(() => {
+            showScreen('loginScreen');
+        }, 1000);
+    }
+
+    // Start the app
+    init();
+
+    // ========================================
+    // SERVICE WORKER REGISTRATION
+    // ========================================
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(err => {
+            console.warn('SW registration failed:', err);
+        });
+    }
+
+    // Prevent zoom on double tap (mobile)
+    document.addEventListener('touchend', function(e) {
+        const now = Date.now();
+        if (now - (this.lastTap || 0) < 300) {
+            e.preventDefault();
+        }
+        this.lastTap = now;
+    }, { passive: false });
+    </script>
+</body>
+</html>
