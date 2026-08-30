@@ -1499,36 +1499,10 @@
     <!-- Print Area -->
     <div class="print-area" id="printArea"></div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
     <script>
     // ========================================
-    // FIREBASE CONFIGURATION
+    // DATA STORAGE - localStorage only (no Firebase DB needed)
     // ========================================
-    // GANTI DENGAN KONFIGURASI FIREBASE ANDA
-    const firebaseConfig = {
-        apiKey: "YOUR_API_KEY",
-        authDomain: "YOUR_PROJECT.firebaseapp.com",
-        databaseURL: "https://YOUR_PROJECT-default-rtdb.firebaseio.com",
-        projectId: "YOUR_PROJECT",
-        storageBucket: "YOUR_PROJECT.appspot.com",
-        messagingSenderId: "YOUR_SENDER_ID",
-        appId: "YOUR_APP_ID"
-    };
-
-    // Initialize Firebase
-    let db;
-    let firebaseReady = false;
-
-    try {
-        firebase.initializeApp(firebaseConfig);
-        db = firebase.database();
-        firebaseReady = firebaseConfig.apiKey !== "YOUR_API_KEY";
-    } catch(e) {
-        console.warn('Firebase init failed, using local storage:', e);
-    }
 
     // ========================================
     // GAME STATE
@@ -1969,19 +1943,10 @@
     }
 
     // ========================================
-    // DATA PERSISTENCE
+    // DATA PERSISTENCE (localStorage)
     // ========================================
     async function getPlayerData(name) {
         const key = sanitizeKey(name);
-        if (firebaseReady) {
-            try {
-                const snapshot = await db.ref('players/' + key).once('value');
-                return snapshot.val();
-            } catch(e) {
-                console.warn('Firebase read failed:', e);
-            }
-        }
-        // Fallback to localStorage
         const data = localStorage.getItem('mathSurvival_player_' + key);
         return data ? JSON.parse(data) : null;
     }
@@ -1989,27 +1954,10 @@
     async function savePlayerData(playerData) {
         const key = sanitizeKey(playerData.name);
         playerData.lastPlayed = new Date().toISOString();
-        if (firebaseReady) {
-            try {
-                await db.ref('players/' + key).set(playerData);
-            } catch(e) {
-                console.warn('Firebase write failed:', e);
-            }
-        }
         localStorage.setItem('mathSurvival_player_' + key, JSON.stringify(playerData));
     }
 
     async function getAllPlayers() {
-        if (firebaseReady) {
-            try {
-                const snapshot = await db.ref('players').once('value');
-                const data = snapshot.val();
-                return data ? Object.values(data) : [];
-            } catch(e) {
-                console.warn('Firebase read all failed:', e);
-            }
-        }
-        // Fallback
         const players = [];
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
@@ -2021,14 +1969,6 @@
     }
 
     async function deleteAllPlayers() {
-        if (firebaseReady) {
-            try {
-                await db.ref('players').remove();
-            } catch(e) {
-                console.warn('Firebase delete all failed:', e);
-            }
-        }
-        // Also clear localStorage
         const keysToRemove = [];
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
